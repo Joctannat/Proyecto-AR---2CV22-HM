@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Realidad Aumentada - HM 2CV22</title>
+
+  <!-- Cargar A-Frame -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <!-- Cargar MindAR para A-Frame -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+
+  <!--
+    imageTargetSrc =  Ruta al archivo .mind de la imagen objetivo
+    maxTrack =  Cantidad de objetivos a rastrear simultáneamente
+  -->
+  <a-scene 
+    mindar-image="imageTargetSrc: ./targets.mind;" 
+    color-space="sRGB" 
+    renderer="colorManagement: true, physicallyCorrectLights" 
+    vr-mode-ui="enabled: false" 
+    device-orientation-permission-ui="enabled: false">
+
+    <a-assets>
+      <!-- Carga previa del modelo 3D (.gltf o .glb) -->
+      <a-asset-item id="miModelo" src="./modelo.glb"></a-asset-item>
+    </a-assets>
+
+    <!-- Cámara de la escena AR -->
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!--
+      targetIndex: 0 (corresponde a la primera imagen entrenada en el archivo .mind)
+    -->
+    <a-entity mindar-image-target="targetIndex: 0">
+      <!-- 
+        Entidad que contiene el modelo 3D. 
+        Ajusta posición, rotación y escala según las dimensiones del modelo
+      -->
+      <a-gltf-model 
+        src="#miModelo" 
+        position="0 0 0" 
+        rotation="0 0 0" 
+        scale="0.5 0.5 0.5">
+      </a-gltf-model>
+    </a-entity>
+
+  </a-scene>
+
+</body>
+</html>
